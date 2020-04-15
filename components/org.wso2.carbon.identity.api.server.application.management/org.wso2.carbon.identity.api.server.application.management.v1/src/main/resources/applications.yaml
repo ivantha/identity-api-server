@@ -2751,6 +2751,8 @@ components:
           example: false
         pkce:
           $ref: '#/components/schemas/OAuth2PKCEConfiguration'
+        authorizationCode:
+          $ref: '#/components/schemas/AuthorizationCodeConfiguration'
         accessToken:
           $ref: '#/components/schemas/AccessTokenConfiguration'
         refreshToken:
@@ -2785,6 +2787,13 @@ components:
         supportPlainTransformAlgorithm:
           type: boolean
           example: true
+    AuthorizationCodeConfiguration:
+      type: object
+      properties:
+        validityPeriodInSeconds:
+          type: integer
+          format: int64
+          example: 300
     AccessTokenConfiguration:
       type: object
       properties:

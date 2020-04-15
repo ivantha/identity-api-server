@@ -17,6 +17,7 @@ package org.wso2.carbon.identity.api.server.application.management.v1.core.funct
 
 import org.apache.commons.lang.StringUtils;
 import org.wso2.carbon.identity.api.server.application.management.v1.AccessTokenConfiguration;
+import org.wso2.carbon.identity.api.server.application.management.v1.AuthorizationCodeConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.IdTokenConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.IdTokenEncryptionConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.OAuth2PKCEConfiguration;
@@ -48,6 +49,7 @@ public class OAuthConsumerAppToApiModel implements Function<OAuthConsumerAppDTO,
                 .callbackURLs(getCallbackUrls(oauthAppDTO))
                 .allowedOrigins(getAllowedOrigins(oauthAppDTO))
                 .pkce(buildPKCEConfiguration(oauthAppDTO))
+                .authorizationCode(buildAuthorizationCodeConfiguration(oauthAppDTO))
                 .accessToken(buildTokenConfiguration(oauthAppDTO))
                 .refreshToken(buildRefreshTokenConfiguration(oauthAppDTO))
                 .idToken(buildIdTokenConfiguration(oauthAppDTO))
@@ -68,6 +70,13 @@ public class OAuthConsumerAppToApiModel implements Function<OAuthConsumerAppDTO,
         return new OIDCLogoutConfiguration()
                 .backChannelLogoutUrl(oAuthConsumerAppDTO.getBackChannelLogoutUrl())
                 .frontChannelLogoutUrl(oAuthConsumerAppDTO.getFrontchannelLogoutUrl());
+    }
+
+    private AuthorizationCodeConfiguration buildAuthorizationCodeConfiguration(
+            OAuthConsumerAppDTO oAuthConsumerAppDTO) {
+
+        return new AuthorizationCodeConfiguration()
+                .validityPeriodInSeconds(oAuthConsumerAppDTO.getAuthorizationCodeValidityPeriod());
     }
 
     private OAuth2PKCEConfiguration buildPKCEConfiguration(OAuthConsumerAppDTO oAuthConsumerAppDTO) {

@@ -18,6 +18,7 @@ package org.wso2.carbon.identity.api.server.application.management.v1.core.funct
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.wso2.carbon.identity.api.server.application.management.v1.AccessTokenConfiguration;
+import org.wso2.carbon.identity.api.server.application.management.v1.AuthorizationCodeConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.IdTokenConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.OAuth2PKCEConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.OIDCLogoutConfiguration;
@@ -60,6 +61,7 @@ public class ApiModelToOAuthConsumerApp implements ApiModelToOAuthConsumerAppFun
 
         updateAllowedOrigins(consumerAppDTO, oidcModel.getAllowedOrigins());
         updatePkceConfigurations(consumerAppDTO, oidcModel.getPkce());
+        updateAuthorizationCodeConfiguration(consumerAppDTO, oidcModel.getAuthorizationCode());
         updateAccessTokenConfiguration(consumerAppDTO, oidcModel.getAccessToken());
         updateRefreshTokenConfiguration(consumerAppDTO, oidcModel.getRefreshToken());
         updateIdTokenConfiguration(consumerAppDTO, oidcModel.getIdToken());
@@ -98,6 +100,14 @@ public class ApiModelToOAuthConsumerApp implements ApiModelToOAuthConsumerAppFun
                 consumerAppDTO.setIdTokenEncryptionAlgorithm(idToken.getEncryption().getAlgorithm());
                 consumerAppDTO.setIdTokenEncryptionMethod(idToken.getEncryption().getMethod());
             }
+        }
+    }
+
+    private void updateAuthorizationCodeConfiguration(OAuthConsumerAppDTO consumerAppDTO,
+                                                      AuthorizationCodeConfiguration authorizationCode) {
+
+        if (authorizationCode != null) {
+            consumerAppDTO.setAuthorizationCodeValidityPeriod(authorizationCode.getValidityPeriodInSeconds());
         }
     }
 

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+* Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import org.wso2.carbon.identity.api.server.application.management.v1.AccessTokenConfiguration;
+import org.wso2.carbon.identity.api.server.application.management.v1.AuthorizationCodeConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.IdTokenConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.OAuth2PKCEConfiguration;
 import org.wso2.carbon.identity.api.server.application.management.v1.OIDCLogoutConfiguration;
@@ -81,6 +82,7 @@ public enum StateEnum {
 
     private Boolean publicClient = false;
     private OAuth2PKCEConfiguration pkce;
+    private AuthorizationCodeConfiguration authorizationCode;
     private AccessTokenConfiguration accessToken;
     private RefreshTokenConfiguration refreshToken;
     private IdTokenConfiguration idToken;
@@ -262,6 +264,24 @@ public enum StateEnum {
 
     /**
     **/
+    public OpenIDConnectConfiguration authorizationCode(AuthorizationCodeConfiguration authorizationCode) {
+
+        this.authorizationCode = authorizationCode;
+        return this;
+    }
+    
+    @ApiModelProperty(value = "")
+    @JsonProperty("authorizationCode")
+    @Valid
+    public AuthorizationCodeConfiguration getAuthorizationCode() {
+        return authorizationCode;
+    }
+    public void setAuthorizationCode(AuthorizationCodeConfiguration authorizationCode) {
+        this.authorizationCode = authorizationCode;
+    }
+
+    /**
+    **/
     public OpenIDConnectConfiguration accessToken(AccessTokenConfiguration accessToken) {
 
         this.accessToken = accessToken;
@@ -415,6 +435,7 @@ public enum StateEnum {
             Objects.equals(this.allowedOrigins, openIDConnectConfiguration.allowedOrigins) &&
             Objects.equals(this.publicClient, openIDConnectConfiguration.publicClient) &&
             Objects.equals(this.pkce, openIDConnectConfiguration.pkce) &&
+            Objects.equals(this.authorizationCode, openIDConnectConfiguration.authorizationCode) &&
             Objects.equals(this.accessToken, openIDConnectConfiguration.accessToken) &&
             Objects.equals(this.refreshToken, openIDConnectConfiguration.refreshToken) &&
             Objects.equals(this.idToken, openIDConnectConfiguration.idToken) &&
@@ -426,7 +447,7 @@ public enum StateEnum {
 
     @Override
     public int hashCode() {
-        return Objects.hash(clientId, clientSecret, state, grantTypes, callbackURLs, allowedOrigins, publicClient, pkce, accessToken, refreshToken, idToken, logout, validateRequestObjectSignature, scopeValidators, accessTokenBindingType);
+        return Objects.hash(clientId, clientSecret, state, grantTypes, callbackURLs, allowedOrigins, publicClient, pkce, authorizationCode, accessToken, refreshToken, idToken, logout, validateRequestObjectSignature, scopeValidators, accessTokenBindingType);
     }
 
     @Override
@@ -443,6 +464,7 @@ public enum StateEnum {
         sb.append("    allowedOrigins: ").append(toIndentedString(allowedOrigins)).append("\n");
         sb.append("    publicClient: ").append(toIndentedString(publicClient)).append("\n");
         sb.append("    pkce: ").append(toIndentedString(pkce)).append("\n");
+        sb.append("    authorizationCode: ").append(toIndentedString(authorizationCode)).append("\n");
         sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
         sb.append("    refreshToken: ").append(toIndentedString(refreshToken)).append("\n");
         sb.append("    idToken: ").append(toIndentedString(idToken)).append("\n");
